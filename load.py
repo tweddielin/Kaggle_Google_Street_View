@@ -6,6 +6,7 @@ import cv2
 from sklearn.cross_validation import train_test_split
 from matplotlib import pyplot as plt
 import csv
+import cPickle
 
 datasets_dir = '/media/datasets/'
 datadir = "/Users/Apple/Documents/Kaggle/First Step with Julia/Data/train/"
@@ -80,6 +81,9 @@ def kaggle_ocr(test_size = 0.4, image_size = 32):
 	label = label.T[1]
 	classes = np.unique(label)
 	classes = classes.tolist()
+	f = open('classes.cpickle', 'w')
+	f.write(cPickle.dumps(classes))
+	f.close()
 	for l in range(len(label)):
 		label[l] = classes.index(label[l])
 
@@ -106,8 +110,10 @@ def kaggle_ocr(test_size = 0.4, image_size = 32):
 	trX = trX/255.
 	teX = teX/255.
 
-	
-
+	#data = {'trX': trX, 'trY': trY, 'teX': teX, 'teY': teY}
+	#f = open("data.cpickle", "w")
+	#f.write(cPickle.dumps(data))
+	#f.close()
 	# test for the training data and label
 
 	print trX.shape

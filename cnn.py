@@ -14,7 +14,7 @@ from load import kaggle_ocr, make_result_csv, kaggle_ocr_test
 
 batch_size = 128
 nb_classes = 62
-nb_epoch = 55
+nb_epoch = 100
 
 # shape of the image (SHAPE x SHAPE)
 shapex, shapey = 32, 32
@@ -51,11 +51,11 @@ model.add(Flatten())
 # the resulting image after conv and pooling is the original shape
 # divided by the pooling with a number of filters for each "pixel"
 # (the number of filters is determined by the last Conv2D)
-model.add(Dense(nb_filters * (shapex / nb_pool) * (shapey / nb_pool), 128))
+model.add(Dense(nb_filters * (shapex / nb_pool) * (shapey / nb_pool), 512))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
 
-model.add(Dense(128, nb_classes))
+model.add(Dense(512, nb_classes))
 model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy', optimizer='adadelta')
@@ -69,7 +69,7 @@ model.fit(trX, trY, batch_size=batch_size, nb_epoch=nb_epoch, show_accuracy=True
 #f.write(cPickle.dumps(model))
 #f.close()
 
-model.save_weights('../Models/cnn_epoch55')
+model.save_weights('../Models/cnn_epoch')
 
 
 test_data = kaggle_ocr_test(image_size = 32)
