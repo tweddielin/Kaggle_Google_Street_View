@@ -27,7 +27,16 @@ nb_conv = 3
 
 
 #
-trX,teX,trY,teY,classes = kaggle_ocr(test_size = 0, image_size = 32)
+#trX,teX,trY,teY,classes = kaggle_ocr(test_size = 0, image_size = 32)
+data = open('data.cpickle').read()
+data = cPickle.loads(data)
+
+
+trX = data['trX']
+trY = data['trY']
+teX = data['teX']
+teY = data['teY']
+
 
 print trX.shape[0],'x', trX.shape[1], 'train samples'
 print teX.shape[0],'x', teX.shape[1], 'test samples' 
